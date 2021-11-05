@@ -3,8 +3,8 @@
 """
 Created on Wed Aug 12 20:25:19 2020
 
-MultiModes is a code to extract all significant pulse modes 
-from one or more signals. For each of them, it calculates 
+MultiModes is a code to extract the most significant frequencies 
+from a sample of variable stars. For each of them, it calculates 
 the LombScargle periodogram and performs a non linear 
 simultaneous fit, using a multisine function, 
 to a set number of frequencies. As a stop criterion, 
@@ -26,8 +26,8 @@ import os
 import argparse
 import glob
 from timeit import default_timer as timer
-# Initial parameters
 
+# Initial parameters
 
 osratio = 5 # Oversampling ratio, by default 
 max_freq = 100 # Maximum frequency in the periodogram, by default
@@ -67,8 +67,6 @@ else:
     print('Not ini.txt. Values of the parameters by default:')     
 
 
-
-
 print('Number of frequencies of the simultaneous fit: ' + str(sim_fit_n))
 print('Samples per peak: ' + str(osratio))
 print('Maximum frequency: ' + str(max_freq))
@@ -77,15 +75,15 @@ print('Stop Criterion: ' + stop)
 
 # Creating the necessary lists
 
-all_best_freqs = []
-all_max_amps = []
-all_phs = []
-all_sigma_amps = []
-all_sigma_freqs = []
-all_sigma_phs = []
+all_best_freqs = [] # The list of extracted frequencies
+all_max_amps = [] # The list of extracted amplitudes
+all_phs = [] # The list of extracted phases
+all_sigma_amps = [] # The list of minimum errors in the amplitudes
+all_sigma_freqs = [] # The list of minimum errors in the frequencies
+all_sigma_phs = [] # The list of minimum errors in the phases
 params = Parameters()
-all_faps = []
-S_N = []
+all_faps = [] # Values of the False Alarm Probability for every extracted frequency
+S_N = [] # Values of the Signal To Noise relation for every extracted frequency
     
 # Defining all the necessary functions
 
@@ -96,7 +94,7 @@ def sinusoid(t, A, f, ph):
 
 
 def periodogram(time, flux): 
-    '''Fast Lomb Scargle to calculate the periodogram'''
+    '''Fast Lomb Scargle to calculate the periodogram (Press & Ribicky 1989)'''
     ls = LombScargle(time, flux, normalization = 'psd', center_data = True, fit_mean = False)
     frequency, power = ls.autopower(method = 'fast', maximum_frequency = max_freq, samples_per_peak = osratio)
     best_frequency = frequency[np.argmax(power)]
@@ -221,7 +219,7 @@ parade = snr_or_fap(stop)[0]
 snr_or_faps = snr_or_fap(stop)[1]
 
 for (f, nm) in zip(fits_files, fits_names):
-    start = timer()
+    start = timer() # Counting executing time for every analysed light curve
     n = 1
     num = 1
     newpath = './results/' + nm + '/'
