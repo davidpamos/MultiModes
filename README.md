@@ -5,7 +5,7 @@ Supervisors: Dr. Juan Carlos Suárez - University of Granada (UGR) -
              Dr. Antonio García Hernández - University of Granada (UGR) -
 Expert contributor: Dr. Javier Pascual Granado - Institute of Astrophysics of Andalusia (IAA) -
 
-# What it is
+# What is it?
 MultiModes is a python code to extract the most significant frequencies of a sample of variable stars
 
 # Input
