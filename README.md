@@ -12,12 +12,12 @@ MultiModes is a python code to extract the most significant frequencies of a sam
 - Directory with light curves in format .fits, corrected from 'outliers' and 'nan' values. Names of the headings: 'TIME' and 'FLUX'
 - ini.txt with the initial parameters: 
   sim_fit_n: Number of simultaneous peaks to be fit before extracting to the original light curve for obtaining the residual: 20 by default
-  max_freq: Maximum value of the analysed frequencies domain: 100 muHz by default
+  max_freq: Maximum value of the analysed frequencies domain: 100 c/d by default (delta Scuti stars)
   os_ratio: oversampling factor: 5 by default
   stop: Stop criterion, FAP or SNR: SNR by default
   min_snr: Minimum signal to noise ratio: 4 by default (Breger 1993)
   max_fap: Maximum value of the False Alarm Probability: 0.01 by default (Balona et al. 2014)
-  tail_per: Minimum  frequency of the tail of the periodogram: 80 muHz by default
+  tail_per: Minimum  frequency of the tail of the periodogram: 80 c/d by default (delta Scuti stars)
   
 # Output
 - Directory 'results' containing subdirectories corresponding to every analysed light curve. Each subdirectory contains:
