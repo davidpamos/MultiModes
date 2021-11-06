@@ -432,11 +432,11 @@ for (f, nm) in zip(fits_files, fits_names):
     #time_df.to_csv(newpath+'velocity.dat', sep = ' ', index = False, header = None)
     end = timer()
 
-    print('Executing time: ' + end-start)
+    print('Executing Time: ' + str(end-start))
 
 print(dash)
 print('Finished'.center(110))
 print(dash)
 end = timer()
 
-print('Executing time: ' + end-start)
+print('Total Executing Time: ' + str(end-start))
