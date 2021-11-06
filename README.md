@@ -1,5 +1,5 @@
 # MultiModes
-Author: David Pamos Ortega 
+Author: David Pamos Ortega \\
         PhD Student - University of Granada (UGR) -
 Supervisors: Dr. Juan Carlos Suárez - University of Granada (UGR) -
              Dr. Antonio García Hernández - University of Granada (UGR) -
