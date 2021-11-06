@@ -48,4 +48,4 @@ This routine has been designed using the astropy packages https://www.astropy.or
 # How to run it
 - Download MultiModes.py and the ini.txt into your work directory.
 - Put in your work directory the directory with the light curves to be analysed.
-- Into in your work dirctory, type the command: run MultiModes.py --d name_of_directory_with_light_curves 
+- Into in your work dirctory, type the command: run MultiModes.py --d name_of_directory_with_light_curves if you use Anaconda or similar python enviroment, or type the command: python MultiModes.py --d name_of_directory_with_light_curves if you use terminal unix. 
