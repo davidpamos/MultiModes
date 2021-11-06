@@ -43,7 +43,7 @@ MultiModes takes as input a directory with corrected light curves in format fits
 It fits frequency, amplitude and phase through non-linear optimization, using a multisine function. This function is redefined with the new calculated parameters. It does a simultaneous fit of a number of peaks (20 by default).
 Then they are subtracted from the original signal and goes back to the beginning of the loop  with the residual, repeating the same process, until the stop criterion is reached. 
 After that, the code can filter suspicious spurious frequencies, those of low amplitude below the Rayleigh resolution, and possible combined frequencies. 
-This routine has been designed using the astropy packages \textcolor{blue}{\href{https://www.astropy.org}{The Astropy Project}} for the calculation of the periodograms and the lmfit packages \textcolor{blue}{\href{https://lmfit.github.io/lmfit-py/}{LMFIT}} for the non-linear and simultaneous adjustment of the extracted signals, using the non-linear least squares method for python.
+This routine has been designed using the astropy packages https://www.astropy.org for the calculation of the periodograms and the lmfit packages https://lmfit.github.io/lmfit-py/ for the non-linear and simultaneous fitting of the extracted signals, using the non-linear least squares method for python.
 
 # How to run it
 - Download MultiModes.py and the ini.txt into your work directory.
