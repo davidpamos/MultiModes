@@ -1,9 +1,7 @@
 # MultiModes
-Author: David Pamos Ortega \\
-        PhD Student - University of Granada (UGR) -
-Supervisors: Dr. Juan Carlos Suárez - University of Granada (UGR) -
-             Dr. Antonio García Hernández - University of Granada (UGR) -
-Expert contributor: Dr. Javier Pascual Granado - Institute of Astrophysics of Andalusia (IAA) -
+- Author: David Pamos Ortega - PhD Student - University of Granada (UGR) -
+- Supervisors: Dr. Juan Carlos Suárez - University of Granada (UGR) - / Dr. Antonio García Hernández - University of Granada (UGR) -
+- Expert contributor: Dr. Javier Pascual Granado - Institute of Astrophysics of Andalusia (IAA) -
 
 # What is it?
 MultiModes is a python code to extract the most significant frequencies of a sample of variable stars
