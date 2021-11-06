@@ -437,6 +437,3 @@ for (f, nm) in zip(fits_files, fits_names):
 print(dash)
 print('Finished'.center(110))
 print(dash)
-end = timer()
-
-print('Total Executing Time: ' + str(end-start))
