@@ -46,6 +46,6 @@ After that, the code can filter suspicious spurious frequencies, those of low am
 This routine has been designed using the astropy packages https://www.astropy.org for the calculation of the periodograms and the lmfit packages https://lmfit.github.io/lmfit-py/ for the non-linear and simultaneous fitting of the extracted signals, using the non-linear least squares method for python.
 
 # How to run it
-- Download MultiModes.py and the ini.txt into your work directory.
-- Put in your work directory the directory with the light curves to be analysed.
-- Into in your work dirctory, type the command: run MultiModes.py --d name_of_directory_with_light_curves if you use Anaconda or similar python enviroment, or type the command: python MultiModes.py --d name_of_directory_with_light_curves if you use terminal unix. 
+- Copy the downloaded files MultiModes.py and ini.txt in your working directory.
+- Copy in your working directory the directory with the light curves to be analysed.
+- In in your working directory, type the command: run MultiModes.py --d name_of_directory_with_light_curves, if you use Anaconda or similar python enviroment, or type the command: python MultiModes.py --d name_of_directory_with_light_curves, if you use terminal unix. 
