@@ -11,8 +11,9 @@ to a set number of frequencies. As a stop criterion,
 you can choose between the FAP or the SNR criterion, 
 depending on the type of analysis you want to perform. 
 
-@author: David Pamos Ortega
-
+@author: David Pamos Ortega (UGR)
+@supervisors: Dr. Juan Carlos Suárez Yanes (UGR) & Dr. Antonio García Hernández (UGR)
+@expert contributor: Dr. Javier Pascual Granado (IAA)
 """
 
 import numpy as np
@@ -55,14 +56,14 @@ if os.path.isfile(filename):
                 osratio = float(line.split(' ')[1])
             if line.startswith("maxfreq"):
                 max_freq = float(line.split(' ')[1])
-            if line.startswith("maxfap"):
+            if line.startswith("max_fap"):
                 max_fap = float(line.split(' ')[1])  
             if line.startswith("tail_per"):
                 tail_per = float(line.split(' ')[1])
-            if line.startswith("minsnr"):
+            if line.startswith("min_snr"):
                 min_snr = float(line.split(' ')[1])
             if line.startswith("stop"):
-                stop = line.split(' ')[1]
+                stop = str(line.split(' ')[1])
 else:
     print('Not ini.txt. Values of the parameters by default:')     
 
@@ -70,7 +71,10 @@ else:
 print('Number of frequencies of the simultaneous fit: ' + str(sim_fit_n))
 print('Samples per peak: ' + str(osratio))
 print('Maximum frequency: ' + str(max_freq))
-print('Stop Criterion: ' + stop)
+if 'SNR' in stop:
+    print('Stop Criterion: SNR > ' + str(min_snr))
+elif 'FAP' in stop:
+    print('Stop Criterion: FAP < ' + str(max_fap))
 
 
 # Creating the necessary lists
@@ -129,22 +133,22 @@ def lightcurve(file):
     '''Reading the .fits file to extract all data'''
     hdul = fits.open(file)
     data = hdul[1].data
-    time = np.array(data['col1'])
+    time = np.array(data['TIME'])
     time = time - time[0]
     T = time[-1]
     N = len(time)
     r = 1/T
-    fluxes = np.array(data['col2'])
+    fluxes = np.array(data['FLUX'])
     mean_flux = np.mean(fluxes)
-    fluxes = (fluxes-mean_flux)/mean_flux*1000
+    fluxes = (fluxes-mean_flux)/mean_flux*1000 # Convert fluxes to mmag 
     return time, fluxes, T, N, r
 
-def snr_or_fap(stop):
+def snr_or_fap(par):
     '''Choosing between the SNR or the FAP stop criterion. 
        SNR by default'''
-    if stop == 'SNR':
+    if 'SNR' in par:
         return min_snr, S_N
-    elif stop == 'FAP':
+    elif 'FAP' in par:
         return max_fap,  all_faps
 
 def comb_freqs(pd):
