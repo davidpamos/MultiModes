@@ -31,12 +31,12 @@ from timeit import default_timer as timer
 # Initial parameters
 
 osratio = 5 # Oversampling ratio, by default 
-max_freq = 100 # Maximum frequency in the periodogram, by default
+max_freq = 100 # Maximum frequency in the periodogram, by default (for delta Scuti stars)
 sim_fit_n = 20 # Maximum number of frequencies of the simultaneous fit, by default
-stop = 'SNR'
-min_snr = 4
-max_fap = 0.01
-tail_per = 80
+stop = 'SNR' # Stop criterion, by default
+min_snr = 4 # Minimum value for SNR by default
+max_fap = 0.01 # Maximum value of FAP by default
+tail_per = 80 # Minimum frequency of the tail of the periodogram, for calculating noise (for delta Scuti stars)
 
 # Reading the initial file with the values of the parameters, if it exists 
 
