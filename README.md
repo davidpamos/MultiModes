@@ -1,6 +1,6 @@
 # MultiModes
 - Author: David Pamos Ortega - PhD Student - University of Granada (UGR) -
-- Thesis Directors: Dr. Juan Carlos Suárez - University of Granada (UGR) -  and Dr. Antonio García Hernández - University of Granada (UGR) -
+- Thesis Directors: Dr. Juan Carlos Suárez Yanes - University of Granada (UGR) -  and Dr. Antonio García Hernández - University of Granada (UGR) -
 - Expert contributor: Dr. Javier Pascual Granado - Institute of Astrophysics of Andalusia (IAA) -
 
 # What is it?
