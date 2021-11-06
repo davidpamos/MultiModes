@@ -240,8 +240,8 @@ for (f, nm) in zip(fits_files, fits_names):
     lc_df = pd.DataFrame({'Time (d)':time, 'Amplitude (mmag)':list(lc)})
     lc_df.to_csv(newpath+'lc.dat', sep = ' ', index=False, header = None)
     lc_df.plot(kind='scatter', x='Time (d)', y = 'Amplitude (mmag)', color='blue', s = 1, title=nm)
+    plt.close()
     plt.savefig(newpath+'LC.png')
-    plt.show()
     lc0 = lc
     ls0 = periodogram(time, lc0)
     periodograms = [ls0,] # Calculating the initial periodogram
@@ -251,8 +251,8 @@ for (f, nm) in zip(fits_files, fits_names):
     per.plot(kind = 'line', x='Frequency (c/d)', y='Amplitude (mmag)', title = nm, legend = False)
     plt.xlabel('Frequency (c/d)')
     plt.ylabel('Amplitude (mmag)')
+    plt.close()
     plt.savefig(newpath+'LS.png')
-    plt.show()
     # Initialization of the lists to save the extracted frequencies, amplitudes and phases
     all_best_freqs = []
     all_max_amps = []
@@ -386,6 +386,7 @@ for (f, nm) in zip(fits_files, fits_names):
         per.plot(kind = 'line', x='Frequency (c/d)', y='Amplitude (mmag)', title = 'Periodogram after subtracting ' + str(n) + ' frecuencies', legend=False)
         plt.xlabel('Frequency (c/d)')
         plt.ylabel('Amplitude (mmag)')
+        plt.close()
         plt.savefig(newpath+'LS_' +str(n) + '.png')
         
     
