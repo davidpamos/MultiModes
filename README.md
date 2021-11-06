@@ -45,6 +45,7 @@ MultiModes takes as input a directory with light curves, corrected from 'outlier
 - max_fap: limit value of the FAP for the peak to be significant. Value by default: 0.01 (Balona et al. 2014).
 - os_ratio: oversampling ratio. Value by default: 5.
 - tail_per: minimum value of the frequency for the tail of the periodogram, in order to calculate noise in every step of the pre-whitening. Value by default (c/d): 80 (considering delta Scuti stars). 
+
 With every light curve, the code calculates the frequencies spectrum, or periodogram, with the Fast Lomb Scargle algorithm (Press & Ribicky 1989). It extracts the higher amplitude peak and evaluates if it is real signal or due to noise, either by the False Alarm Probability or by the Signal to Noise criterion, it is a decision of the user at the time of choosing the initial parameters. By default it is chosen to use as  stop criterion that S/N is greater than 4, (Breger 1993).
 It fits frequency, amplitude and phase through non-linear optimization, using a multisine function. This function is redefined with the new calculated parameters. It does a simultaneous fit of a number of peaks (20 by default).
 Then they are subtracted from the original signal and goes back to the beginning of the loop  with the residual, repeating the same process, until the stop criterion is reached. 
