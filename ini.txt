@@ -1,7 +1,7 @@
 sim_fit_n 20
 maxfreq 100
 osratio 5
-stop = 'SNR'
-min_snr = 4
-max_fap = 0.01
-tail_per = 80
+stop SNR
+min_snr 4
+max_fap 0.01
+tail_per 80
