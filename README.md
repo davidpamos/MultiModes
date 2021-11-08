@@ -4,7 +4,7 @@
 - Expert contributor: Dr. Javier Pascual Granado - Institute of Astrophysics of Andalusia (IAA) -
 
 # What is it?
-MultiModes is a python code to extract the most significant frequencies of a sample of variable stars
+MultiModes is a python code to extract the most significant frequencies of a sample of classical pulsating stars
 
 # Input
 - Directory with light curves in format .fits, corrected from 'outliers' and 'nan' values. Headers: 'TIME' and 'FLUX'
