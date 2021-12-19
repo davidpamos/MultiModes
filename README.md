@@ -7,7 +7,7 @@
 MultiModes is a python code to extract the most significant frequencies of a sample of classical pulsating stars
 
 # Input
-- Directory with light curves in format .fits, corrected from 'outliers' and 'nan' values. Headers: 'TIME' and 'FLUX'
+- Directory with light curves in format .fits, corrected from 'outliers' and 'nan' values. Headers: 'TIME' and 'PDCSAP_FLUX'
 - ini.txt with the initial parameters: 
   - sim_fit_n: Number of simultaneous peaks to be fit before extracting to the original light curve for obtaining the residual: 20 by default
   - max_freq: Maximum value of the analysed frequencies domain: 100 c/d by default (delta Scuti stars)
