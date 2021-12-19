@@ -133,14 +133,16 @@ def lightcurve(file):
     '''Reading the .fits file to extract all data'''
     hdul = fits.open(file)
     data = hdul[1].data
+    data = pd.DataFrame(np.array(data))
+    data = data.dropna(subset=['PDCSAP_FLUX'])
     time = np.array(data['TIME'])
     time = time - time[0]
     T = time[-1]
     N = len(time)
     r = 1/T
-    fluxes = np.array(data['FLUX'])
+    fluxes = np.array(data['PDCSAP_FLUX'])
     mean_flux = np.mean(fluxes)
-    fluxes = (fluxes-mean_flux)/mean_flux*1000 # Convert fluxes to mmag 
+    fluxes = (fluxes-mean_flux)/mean_flux*1000 # convert fluxes to mmag
     return time, fluxes, T, N, r
 
 def snr_or_fap(par):
