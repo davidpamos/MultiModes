@@ -37,7 +37,7 @@ MultiModes is a python code to extract the most significant frequencies of a sam
 - scipy 1.5.2
 
 # What does it do
-MultiModes takes as input a directory with light curves, corrected from 'outliers' and 'nan' values, in fits format, with headers 'TIME' and 'FLUX', and the initial parameters written in a text file:
+MultiModes takes as input a directory with light curves, corrected from 'outliers' and 'nan' values, in fits format, with headers 'TIME' and 'PDCSAP_FLUX', and the initial parameters written in a text file:
 - sim_fit_n: the number of simultaneous peaks subtracted from the original light curve after the fit. Value by default: 20.
 - max_freq: the  maximum frequency of the studied domain. Value by default (c/d): 100 (considering delta Scuti stars).
 - stop: the stop criterion can be the Signal to Noise Ratio (SNR) or the False Alarm Probability (FAP). Value by default: SNR.
