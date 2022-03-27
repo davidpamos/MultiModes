@@ -263,6 +263,7 @@ for (f, nm) in zip(fits_files, fits_names):
     all_sigma_amps = []
     all_sigma_freqs = []
     all_sigma_phs = []
+    all_rms = []
     params = Parameters()
     print(dash)
     print('{:<15s}{:>18s}{:>25s}{:>32}' .format(columns[0],
@@ -274,6 +275,7 @@ for (f, nm) in zip(fits_files, fits_names):
         ls = periodogram(time, lc)
         freq = ls[3]
         amp = ls[4]
+        rms = np.sqrt(sum(lc**2)/len(lc))
         sigma_freq = np.sqrt(6/N)/(np.math.pi*T)*sigma_lc/amp
         ph = 0.5
         snr = amp/ls[6]
@@ -282,6 +284,7 @@ for (f, nm) in zip(fits_files, fits_names):
         if parade == min_snr:
             if snr > parade: # Stop criterion
                 snr_or_faps.append(snr)
+                all_rms.append(rms)
                 all_sigma_amps.append(sigma_amp)
                 new_guesses = [amp, freq, ph]
                 params.add('p_'+str(n)+'a', value = new_guesses[0], min=0, max=2*amp)
@@ -328,6 +331,7 @@ for (f, nm) in zip(fits_files, fits_names):
         elif parade == max_fap:
             if fap < parade: # Stop criterion
                 snr_or_faps.append(fap)
+                all_rms.append(rms)
                 all_sigma_amps.append(sigma_amp)
                 new_guesses = [amp, freq, ph]
                 params.add('p_'+str(n)+'a', value = new_guesses[0], min=0, max=2*amp)
@@ -378,7 +382,9 @@ for (f, nm) in zip(fits_files, fits_names):
                             'Phases':all_phs, 'Amplitude 1-sigma error (mmag)': all_sigma_amps, 
                             'Frequency 1-sigma error (c/d)': all_sigma_freqs, 
                             'Phase 1-sigma error (c/d)': all_sigma_phs, 
-                            'SNR/FAP':snr_or_faps})
+                            'SNR/FAP':snr_or_faps,
+                            'rms':all_rms}
+                           )
     
     
     res = pd.DataFrame({'Frequencies': ls[1], 'Amplitudes': ls[2]})
