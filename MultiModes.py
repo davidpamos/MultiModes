@@ -88,6 +88,7 @@ all_sigma_phs = [] # The list of minimum errors in the phases
 params = Parameters()
 all_faps = [] # Values of the False Alarm Probability for every extracted frequency
 S_N = [] # Values of the Signal To Noise relation for every extracted frequency
+all_rms = [] # Residual mean square of the signal in every step of the pre-whitening
     
 # Defining all the necessary functions
 
