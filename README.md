@@ -2,6 +2,7 @@
 - Author: David Pamos Ortega - PhD Student - University of Granada (UGR) -
 - Thesis Directors: Dr. Juan Carlos Suárez Yanes - University of Granada (UGR) -  and Dr. Antonio García Hernández - University of Granada (UGR) -
 - Expert contributor: Dr. Javier Pascual Granado - Institute of Astrophysics of Andalusia (IAA) -
+- If using MultiModes, please cite the author this way: Pamos Ortega, D. et al. 2022 (https://doi.org/10.1093/mnras/stac864)
 
 # What is it?
 MultiModes is a python code to extract the most significant frequencies of a sample of classical pulsating stars
