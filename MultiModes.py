@@ -335,12 +335,12 @@ for (f, nm) in zip(fits_files, fits_names):
                 all_rms.append(rms)
                 all_sigma_amps.append(sigma_amp)
                 new_guesses = [amp, freq, ph]
-                params.add('p_'+str(n)+'a', value = new_guesses[0], min=0, max=2*amp)
-                params.add('p_'+str(n)+'b', value = new_guesses[1], min=freq-rayleigh/2, max=freq+rayleigh/2)
-                params.add('p_'+str(n)+'c', value = new_guesses[2], min=0, max=1)
+                params.add('p_'+str(n)+'a', value = new_guesses[0], min=0, max=2*amp) # remove minimum and maximum bounds if it used 'leastsq' method (Levenberg-Marquardt)
+                params.add('p_'+str(n)+'b', value = new_guesses[1], min=freq-rayleigh/2, max=freq+rayleigh/2) # remove minimum and maximum bounds if it used 'leastsq' method (Levenberg-Marquardt)
+                params.add('p_'+str(n)+'c', value = new_guesses[2], min=0, max=1) # remove minimum and maximum bounds if it used 'leastsq' method (Levenberg-Marquardt)
                 #best_freqs = fit(time, params)[2]
                 max_amps = fit(time, params)[1]
-                res = minimize(residual, params, args=(time, lc0), method = 'least_squares')
+                res = minimize(residual, params, args=(time, lc0), method = 'least_squares') # remove minimum and maximum bounds if it used 'leastsq' method (Levenberg-Marquardt)
                 lc = res.residual
                 params = res.params
                 sigma_freqs = [np.sqrt(6/N)/(np.math.pi*T)*sigma_lc/np.abs(a) for a in max_amps]
