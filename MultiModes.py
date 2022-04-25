@@ -143,7 +143,7 @@ def lightcurve(file):
     r = 1/T
     fluxes = np.array(data['PDCSAP_FLUX'])
     mean_flux = np.mean(fluxes)
-    fluxes = (fluxes-mean_flux)/mean_flux*1000 # convert fluxes to mmag
+    fluxes = (fluxes-mean_flux)/mean_flux*1000 # convert fluxes to ppt
     return time, fluxes, T, N, r
 
 def snr_or_fap(par):
@@ -217,7 +217,7 @@ fits_files = sorted(fits_files)
 
 columns = ['Number',
            'f (c/d)',
-           'A (mmag)',
+           'A (ppt)',
            stop]
 
 # Setting stop criterion
@@ -240,20 +240,20 @@ for (f, nm) in zip(fits_files, fits_names):
     rayleigh = data[4] # Rayleigh resolution of the sampling
     sigma_lc = stats.sem(list(lc)) # 1-sigma error of the magnitude
     sigma_amp = np.sqrt(2/N)*sigma_lc # 1-sigma error of the amplitude
-    lc_df = pd.DataFrame({'Time (d)':time, 'Amplitude (mmag)':list(lc)})
+    lc_df = pd.DataFrame({'Time (d)':time, 'Amplitude (ppt)':list(lc)})
     lc_df.to_csv(newpath+'lc.dat', sep = ' ', index=False, header = None)
-    lc_df.plot(kind='scatter', x='Time (d)', y = 'Amplitude (mmag)', color='blue', s = 1, title=nm)
+    lc_df.plot(kind='scatter', x='Time (d)', y = 'Amplitude (ppt)', color='blue', s = 1, title=nm)
     plt.savefig(newpath+'LC.png')
     plt.close()
     lc0 = lc
     ls0 = periodogram(time, lc0)
     periodograms = [ls0,] # Calculating the initial periodogram
     n_per = [0,]
-    per = pd.DataFrame({'Frequency (c/d)':ls0[1], 'Amplitude (mmag)':ls0[2]})
+    per = pd.DataFrame({'Frequency (c/d)':ls0[1], 'Amplitude (ppt)':ls0[2]})
     per.to_csv(newpath+'pg.dat', sep=' ', index=False, header = None)
-    per.plot(kind = 'line', x='Frequency (c/d)', y='Amplitude (mmag)', title = nm, legend = False)
+    per.plot(kind = 'line', x='Frequency (c/d)', y='Amplitude (ppt)', title = nm, legend = False)
     plt.xlabel('Frequency (c/d)')
-    plt.ylabel('Amplitude (mmag)')
+    plt.ylabel('Amplitude (ppt)')
     plt.savefig(newpath+'LS.png')
     plt.close()
     # Initialization of the lists to save the extracted frequencies, amplitudes and phases
@@ -288,12 +288,12 @@ for (f, nm) in zip(fits_files, fits_names):
                 all_rms.append(rms)
                 all_sigma_amps.append(sigma_amp)
                 new_guesses = [amp, freq, ph]
-                params.add('p_'+str(n)+'a', value = new_guesses[0], min=0, max=2*amp)
-                params.add('p_'+str(n)+'b', value = new_guesses[1], min=freq-rayleigh/2, max=freq+rayleigh/2)
-                params.add('p_'+str(n)+'c', value = new_guesses[2], min=0, max=1)
+                params.add('p_'+str(n)+'a', value = new_guesses[0], min=0, max=2*amp) # remove minimum and maximum bounds if it used 'leastsq' method (Levenberg-Marquardt)
+                params.add('p_'+str(n)+'b', value = new_guesses[1], min=freq-rayleigh/2, max=freq+rayleigh/2) # remove minimum and maximum bounds if it used 'leastsq' method (Levenberg-Marquardt)
+                params.add('p_'+str(n)+'c', value = new_guesses[2], min=0, max=1) # remove minimum and maximum bounds if it used 'leastsq' method (Levenberg-Marquardt)
                 #best_freqs = fit(time, params)[2]
                 max_amps = fit(time, params)[1]
-                res = minimize(residual, params, args=(time, lc0), method = 'least_squares')
+                res = minimize(residual, params, args=(time, lc0), method = 'least_squares') # remove minimum and maximum bounds if it used 'leastsq' method (Levenberg-Marquardt)
                 lc = res.residual
                 params = res.params
                 sigma_freqs = [np.sqrt(6/N)/(np.math.pi*T)*sigma_lc/np.abs(a) for a in max_amps]
@@ -380,7 +380,7 @@ for (f, nm) in zip(fits_files, fits_names):
     
     
     prew_df = pd.DataFrame({'Freqs': all_best_freqs, 'Amps': all_max_amps, 
-                            'Phases':all_phs, 'Amplitude 1-sigma error (mmag)': all_sigma_amps, 
+                            'Phases':all_phs, 'Amplitude 1-sigma error (ppt)': all_sigma_amps, 
                             'Frequency 1-sigma error (c/d)': all_sigma_freqs, 
                             'Phase 1-sigma error (c/d)': all_sigma_phs, 
                             'SNR/FAP':snr_or_faps,
@@ -391,10 +391,10 @@ for (f, nm) in zip(fits_files, fits_names):
     res = pd.DataFrame({'Frequencies': ls[1], 'Amplitudes': ls[2]})
     res.to_csv(newpath+'res.dat', sep=' ', index=False, header = None)
     for (p, n) in zip(periodograms, n_per):
-        per = pd.DataFrame({'Frequency (c/d)':p[1], 'Amplitude (mmag)':p[2]})
-        per.plot(kind = 'line', x='Frequency (c/d)', y='Amplitude (mmag)', title = 'Periodogram after subtracting ' + str(n) + ' frecuencies', legend=False)
+        per = pd.DataFrame({'Frequency (c/d)':p[1], 'Amplitude (ppt)':p[2]})
+        per.plot(kind = 'line', x='Frequency (c/d)', y='Amplitude (ppt)', title = 'Periodogram after subtracting ' + str(n) + ' frecuencies', legend=False)
         plt.xlabel('Frequency (c/d)')
-        plt.ylabel('Amplitude (mmag)')
+        plt.ylabel('Amplitude (ppt)')
         plt.savefig(newpath+'LS_' +str(n) + '.png')
         plt.close()
         
