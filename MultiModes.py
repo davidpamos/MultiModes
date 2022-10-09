@@ -24,9 +24,13 @@ from astropy.io import fits
 from lmfit import Parameters, minimize
 from scipy import stats
 import os
+from datetime import date
 import argparse
 import glob
 from timeit import default_timer as timer
+
+# Current day
+today = date.today()
 
 # Initial parameters
 
@@ -378,14 +382,12 @@ for (f, nm) in zip(fits_files, fits_names):
         
     l = len(all_best_freqs)        
     
-    
-    prew_df = pd.DataFrame({'Freqs': all_best_freqs, 'Amps': all_max_amps, 
-                            'Phases':all_phs, 'Amplitude 1-sigma error (ppt)': all_sigma_amps, 
-                            'Frequency 1-sigma error (c/d)': all_sigma_freqs, 
-                            'Phase 1-sigma error (c/d)': all_sigma_phs, 
+    prew_df = pd.DataFrame({'f(c/d)': all_best_freqs, 'A(ppt)': all_max_amps, 
+                            'Phase':all_phs, 'Min_Error_f(c/d)': all_sigma_freqs,
+                            'Min_Error_A(ppt)': all_sigma_amps, 
+                            'Min_Error_phase': all_sigma_phs, 
                             'SNR/FAP':snr_or_faps,
-                            'rms':all_rms}
-                           )
+                            'rms':all_rms})
     
     
     res = pd.DataFrame({'Frequencies': ls[1], 'Amplitudes': ls[2]})
@@ -395,6 +397,7 @@ for (f, nm) in zip(fits_files, fits_names):
         per.plot(kind = 'line', x='Frequency (c/d)', y='Amplitude (ppt)', title = 'Periodogram after subtracting ' + str(n) + ' frecuencies', legend=False)
         plt.xlabel('Frequency (c/d)')
         plt.ylabel('Amplitude (ppt)')
+        
         plt.savefig(newpath+'LS_' +str(n) + '.png')
         plt.close()
         
@@ -419,11 +422,11 @@ for (f, nm) in zip(fits_files, fits_names):
                     if added_amps[-1] > a:
                         if f in filtered_freqs:
                             filtered_freqs.remove(f)
-                            prew_df = prew_df[prew_df.Freqs != f]
+                            prew_df = prew_df[prew_df['f(c/d)'] != f]
                     else:
                         if added_freqs[-1] in filtered_freqs:
                             filtered_freqs.remove(added_freqs[-1])
-                            prew_df = prew_df[prew_df.Freqs != added_freqs[-1]]    
+                            prew_df = prew_df[prew_df['f(c/d)'] != added_freqs[-1]]    
         else:
             copied_freqs.remove(freq)
             copied_amps.remove(amp)
@@ -437,7 +440,23 @@ for (f, nm) in zip(fits_files, fits_names):
             prew_df = prew_df[prew_df.Freqs != f]
     except KeyError:
         pass
-    prew_df.to_csv(newpath+'best_modes.dat', sep = ' ', index = False, header = None)
+    
+    
+    prew_df.to_csv(newpath+'best_modes.dat', sep = ' ', index = False)
+    
+    #Save metadata
+    metadata = dict(code= 'MultiModes_v1.1', date=today.strftime("%B %d, %Y"))
+    filename = newpath+'best_modes.dat'
+    with open(filename,'r+') as f:
+        lines = f.readlines()
+        f.seek(0)
+        f.write('# '+metadata['code']+'\n')
+        f.write(str('# '+metadata['date'])+'\n')
+        f.write('# '+'Input file: '+nm+'\n')
+        f.write('\n')
+        for line in lines:
+            f.write(line)
+    f.close()
     #time_df.to_csv(newpath+'velocity.dat', sep = ' ', index = False, header = None)
     end = timer()
 
@@ -446,3 +465,5 @@ for (f, nm) in zip(fits_files, fits_names):
 print(dash)
 print('Finished'.center(110))
 print(dash)
+    
+            
